@@ -1,0 +1,24 @@
+{
+  "uuid": "b7c417ed-c3ff-4cb5-b8de-be47c6efe347",
+  "shortName": "Candy Corn",
+  "longName": "Candy Corn",
+  "companyName": "Turner Vink",
+  "versionLabel": "1.0",
+  "sdkVersion": "3",
+  "targetPlatforms": ["basalt", "chalk"],
+  "watchapp": {
+    "watchface": true
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": [
+      {
+        "file": "absender1.ttf",
+        "name": "FONT_ABSENDER_48",
+        "type": "font"
+      }
+    ]
+  }
+}
