@@ -6,4 +6,4 @@ build
 .lock-waf*
 
 # Ignore PSD documents
-.psd
+*.psd
