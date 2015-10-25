@@ -81,10 +81,10 @@ static void main_window_load(Window *window) {
 	text_layer_set_background_color(date_layer, GColorClear);
 	text_layer_set_text_alignment(date_layer, GTextAlignmentCenter);
 
-	time_layer = text_layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
+	time_layer = text_layer_create(GRect(0, 50, bounds.size.w, 50));
 	text_layer_set_font(time_layer, time_font);
 	text_layer_set_text_color(time_layer, GColorYellow);
-	text_layer_set_text(time_layer, "test");
+	text_layer_set_text(time_layer, "     ");
 	GSize time_size = text_layer_get_content_size(time_layer);
 	layer_set_frame(text_layer_get_layer(time_layer), GRect(0, (bounds.size.h / 2), bounds.size.w, bounds.size.h)); // ((square2_size.size.h / 2) + (time_size.h / 2))
 	text_layer_set_background_color(time_layer, GColorClear);
@@ -99,11 +99,12 @@ static void main_window_load(Window *window) {
 	text_layer_set_background_color(day_layer, GColorClear);
 	text_layer_set_text_alignment(day_layer, GTextAlignmentCenter);
 
-	update_time();
 
 	layer_add_child(window_get_root_layer(window), text_layer_get_layer(time_layer));
 	layer_add_child(window_get_root_layer(window), text_layer_get_layer(date_layer));
 	layer_add_child(window_get_root_layer(window), text_layer_get_layer(day_layer));
+
+	update_time();
 }
 
 static void main_window_unload(Window *window) {
