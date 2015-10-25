@@ -5,13 +5,13 @@ static Layer *square1, *square2, *square3;
 static TextLayer *time_layer, *date_layer, *day_layer;
 static GFont time_font;
 
+static char time_buffer[] = "00:00";
+static char week_buffer[] = "WWW";
+static char date_buffer[] = "DD";
+
 static void update_time() {
 	time_t temp = time(NULL);
 	struct tm *tick_time = localtime(&temp);
-
-	static char time_buffer[] = "00:00";
-	static char week_buffer[] = "WWW";
-	static char date_buffer[] = "DD";
 
 	if(clock_is_24h_style() == true) {
 		strftime(time_buffer, sizeof("00:00"), "%H:%M", tick_time);
@@ -86,7 +86,7 @@ static void main_window_load(Window *window) {
 	text_layer_set_text_color(time_layer, GColorYellow);
 	text_layer_set_text(time_layer, "     ");
 	GSize time_size = text_layer_get_content_size(time_layer);
-	layer_set_frame(text_layer_get_layer(time_layer), GRect(0, (bounds.size.h / 2), bounds.size.w, bounds.size.h)); // ((square2_size.size.h / 2) + (time_size.h / 2))
+	layer_set_frame(text_layer_get_layer(time_layer), GRect(0, ((square2_size.size.h / 2) + (time_size.h / 2)), bounds.size.w, bounds.size.h)); // ((square2_size.size.h / 2) + (time_size.h / 2))
 	text_layer_set_background_color(time_layer, GColorClear);
 	text_layer_set_text_alignment(time_layer, GTextAlignmentCenter);
 
