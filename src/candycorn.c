@@ -2,7 +2,7 @@
 
 static Window *main_window;
 static Layer *square1, *square2, *square3;
-static TextLayer *time_layer, *date_layer;
+static TextLayer *time_layer, *date_layer, *day_layer;
 static GFont time_font;
 
 static void update_time() {
@@ -10,7 +10,8 @@ static void update_time() {
 	struct tm *tick_time = localtime(&temp);
 
 	static char time_buffer[] = "00:00";
-	static char date_buffer[] = "WWW DD";
+	static char week_buffer[] = "WWW";
+	static char date_buffer[] = "DD";
 
 	if(clock_is_24h_style() == true) {
 		strftime(time_buffer, sizeof("00:00"), "%H:%M", tick_time);
@@ -18,10 +19,12 @@ static void update_time() {
 		strftime(time_buffer, sizeof("00:00"), "%I:%M", tick_time);
 	}
 
-	strftime(date_buffer, sizeof("WWW DD"), "%a %e", tick_time);
+	strftime(date_buffer, sizeof("WWW"), "%a", tick_time);
+	strftime(week_buffer, sizeof("DD"), "%e", tick_time);
 
 	text_layer_set_text(time_layer, time_buffer);
 	text_layer_set_text(date_layer, date_buffer); 
+	text_layer_set_text(day_layer, week_buffer); 
 }
 
 static void square1_draw(Layer *layer, GContext *ctx) {
@@ -72,7 +75,7 @@ static void main_window_load(Window *window) {
 	date_layer = text_layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
 	text_layer_set_font(date_layer, time_font);
 	text_layer_set_text_color(date_layer, GColorOrange);
-	text_layer_set_text(date_layer, "      ");
+	text_layer_set_text(date_layer, "   ");
 	GSize date_size = text_layer_get_content_size(date_layer);
 	layer_set_frame(text_layer_get_layer(date_layer), GRect(0, 0, bounds.size.w, bounds.size.h));
 	text_layer_set_background_color(date_layer, GColorClear);
@@ -81,16 +84,26 @@ static void main_window_load(Window *window) {
 	time_layer = text_layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
 	text_layer_set_font(time_layer, time_font);
 	text_layer_set_text_color(time_layer, GColorYellow);
-	text_layer_set_text(time_layer, "      ");
+	text_layer_set_text(time_layer, "test");
 	GSize time_size = text_layer_get_content_size(time_layer);
-	layer_set_frame(text_layer_get_layer(time_layer), GRect(0, ((square2_size.size.h / 2) + (time_size.h / 2)), bounds.size.w, bounds.size.h));
+	layer_set_frame(text_layer_get_layer(time_layer), GRect(0, (bounds.size.h / 2), bounds.size.w, bounds.size.h)); // ((square2_size.size.h / 2) + (time_size.h / 2))
 	text_layer_set_background_color(time_layer, GColorClear);
 	text_layer_set_text_alignment(time_layer, GTextAlignmentCenter);
+
+	day_layer = text_layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
+	text_layer_set_font(day_layer, time_font);
+	text_layer_set_text_color(day_layer, GColorBlack);
+	text_layer_set_text(day_layer, "  ");
+	GSize day_size = text_layer_get_content_size(day_layer);
+	layer_set_frame(text_layer_get_layer(day_layer), GRect(0, ((bounds.size.h / 3) * 2), bounds.size.w, bounds.size.h));
+	text_layer_set_background_color(day_layer, GColorClear);
+	text_layer_set_text_alignment(day_layer, GTextAlignmentCenter);
 
 	update_time();
 
 	layer_add_child(window_get_root_layer(window), text_layer_get_layer(time_layer));
 	layer_add_child(window_get_root_layer(window), text_layer_get_layer(date_layer));
+	layer_add_child(window_get_root_layer(window), text_layer_get_layer(day_layer));
 }
 
 static void main_window_unload(Window *window) {
