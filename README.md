@@ -6,6 +6,3 @@ www.turnervink.com
 
 * Supports Pebble Time and Pebble Time Round
 * Looks delicious!
-
-Download on the Pebble app store:<br>
--COMING SOON-
